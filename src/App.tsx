@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Clock, HelpCircle, ChevronDown, ChevronUp, Award } from 'lucide-react';
+import { ShieldCheck, Clock, HelpCircle, ChevronDown, ChevronUp, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 import CheckoutModal from './components/CheckoutModal';
 import DashboardSandbox from './components/DashboardSandbox';
 
@@ -57,14 +57,13 @@ export default function App() {
     return () => clearInterval(ticker);
   }, []);
 
-  // Automatic carousel slide transition (every 1.3 seconds)
-  useEffect(() => {
-    if (isPaid) return;
-    const timer = setTimeout(() => {
-      setCarouselIndex(prev => (prev === CAROUSEL_IMAGES.length - 1 ? 0 : prev + 1));
-    }, 1300);
-    return () => clearTimeout(timer);
-  }, [carouselIndex, isPaid]);
+  const nextSlide = () => {
+    setCarouselIndex(prev => (prev === CAROUSEL_IMAGES.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCarouselIndex(prev => (prev === 0 ? CAROUSEL_IMAGES.length - 1 : prev - 1));
+  };
 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
@@ -192,17 +191,38 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Interactive Carousel - Just Large Images without Boxed Card Section style */}
+              {/* Interactive Carousel - Just Large Images with Manual Arrows */}
               <div className="w-full flex flex-col gap-4 items-center">
                 
-                {/* Main Large Image Stage */}
-                <div className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-slate-950 shadow-md">
-                  <img 
-                    src={CAROUSEL_IMAGES[carouselIndex]}
-                    alt={`Festa infantil decorada com moldes ${carouselIndex + 1}`}
-                    className="w-full h-full object-contain select-none transition-all duration-300"
-                    referrerPolicy="no-referrer"
-                  />
+                {/* Main Large Image Stage with Left & Right arrows */}
+                <div className="w-full relative flex items-center group">
+                  
+                  {/* Left Arrow Button */}
+                  <button
+                    onClick={prevSlide}
+                    className="absolute left-3 sm:left-4 z-10 bg-white/90 hover:bg-white active:bg-slate-100 text-slate-800 p-2 sm:p-2.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all border border-slate-100 cursor-pointer"
+                    aria-label="Imagem anterior"
+                  >
+                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
+                  </button>
+
+                  <div className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-slate-950 shadow-md">
+                    <img 
+                      src={CAROUSEL_IMAGES[carouselIndex]}
+                      alt={`Festa infantil decorada com moldes ${carouselIndex + 1}`}
+                      className="w-full h-full object-contain select-none transition-all duration-300"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+
+                  {/* Right Arrow Button */}
+                  <button
+                    onClick={nextSlide}
+                    className="absolute right-3 sm:right-4 z-10 bg-white/90 hover:bg-white active:bg-slate-100 text-slate-800 p-2 sm:p-2.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all border border-slate-100 cursor-pointer"
+                    aria-label="Próxima imagem"
+                  >
+                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
+                  </button>
                 </div>
 
                 {/* Indicator dot triggers */}
