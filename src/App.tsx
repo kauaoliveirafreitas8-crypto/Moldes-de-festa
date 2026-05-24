@@ -56,6 +56,10 @@ export default function App() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
+  const handleCtaClick = () => {
+    window.location.href = "https://pay.lowify.com.br/checkout.php?product_id=iSeaBR";
+  };
+
   // Dynamically obtain current date formatted as DD/MM/YYYY
   const getTodayFormatted = () => {
     const today = new Date();
@@ -178,7 +182,7 @@ export default function App() {
             <div className="w-full max-w-lg mt-8 px-2 flex flex-col items-center">
               <button
                 id="main-purchase-cta"
-                onClick={() => setIsCheckoutOpen(true)}
+                onClick={handleCtaClick}
                 className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-extrabold text-base sm:text-lg md:text-xl py-4 sm:py-5 px-6 rounded-2xl shadow-xl shadow-emerald-500/20 active:shadow-md transition-all hover:scale-[1.02] active:scale-[0.99] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
               >
                 <span>🎉</span>
@@ -250,7 +254,7 @@ export default function App() {
 
                 {/* CTA Button below the carousel */}
                 <button
-                  onClick={() => setIsCheckoutOpen(true)}
+                  onClick={handleCtaClick}
                   className="w-full max-w-xl mt-4 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-sm sm:text-base md:text-lg py-4 px-6 rounded-2xl sm:rounded-3xl shadow-lg shadow-emerald-500/25 active:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 tracking-wider cursor-pointer select-none uppercase font-display"
                 >
                   <span className="text-lg sm:text-xl">🎉</span>
@@ -416,7 +420,7 @@ export default function App() {
                   {/* CTA button in Offer Card */}
                   <button
                     id="offer-purchase-cta"
-                    onClick={() => setIsCheckoutOpen(true)}
+                    onClick={handleCtaClick}
                     className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-extrabold text-base sm:text-lg py-4 px-6 rounded-2xl shadow-lg shadow-emerald-500/25 active:shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
                   >
                     <span>🎁</span>
