@@ -1,0 +1,6 @@
+{
+  "name": "Moldes de Festa",
+  "description": "Oferta exclusiva de mais de 2.500 moldes de festa infantil prontos para baixar e imprimir.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
