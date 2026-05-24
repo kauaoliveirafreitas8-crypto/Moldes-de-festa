@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Clock, HelpCircle, ChevronDown, ChevronUp, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShieldCheck, Clock, ChevronDown } from 'lucide-react';
 import CheckoutModal from './components/CheckoutModal';
 import DashboardSandbox from './components/DashboardSandbox';
 
@@ -22,12 +22,39 @@ const CAROUSEL_IMAGES = [
   'https://i.ibb.co/fzCMKqdj/ursinho-puf16.jpg'
 ];
 
+const FAQ_ITEMS = [
+  {
+    question: "Como vou receber os moldes?",
+    answer: "A liberação do seu acesso é imediata! Se pagar por Pix ou Cartão, os dados de acesso são enviados diretamente para o seu e-mail cadastrado logo após a confirmação do pagamento. Você terá acesso à nossa Central de Downloads VIP na tela."
+  },
+  {
+    question: "Quais são os formatos dos arquivos?",
+    answer: "Todos os arquivos estão organizados e prontos para uso em alta definição. Você receberá arquivos editáveis em SVG (para Illustrator/outros programas), DXF/STUDIO3 (fatias e linhas para Silhouette Studio) e PDF de alta qualidade prontos para impressão direta e corte com tesoura."
+  },
+  {
+    question: "Consigo editar os nomes e idades?",
+    answer: "Sim! Os arquivos são compatíveis e flexíveis. Você pode alterar nomes, idades ou cores usando ferramentas como Silhouette Studio, Illustrator, Corel Draw ou outros programas de edição compatíveis de forma simples."
+  },
+  {
+    question: "Por quanto tempo terei acesso?",
+    answer: "Seu acesso é vitalício! Você pode baixar os arquivos hoje, amanhã ou daqui a um ano quantas vezes precisar. Não cobramos mensalidades, taxa única de apenas R$ 5,99."
+  },
+  {
+    question: "Se eu tiver alguma dificuldade, terei ajuda?",
+    answer: "Com certeza. Oferecemos suporte completo para te auxiliar no download ou qualquer outra questão técnica relacionada ao uso e impressão do material de forma simples e rápida."
+  },
+  {
+    question: "Tem alguma garantia de satisfação?",
+    answer: "Sim! Oferecemos 7 dias de garantia incondicional. Se em até 7 dias você não gostar do material, devolvemos 100% do seu dinheiro sem nenhuma complicação."
+  }
+];
+
 export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [countdown, setCountdown] = useState({ hours: 2, minutes: 44, seconds: 12 });
   const [carouselIndex, setCarouselIndex] = useState(0);
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   // Dynamically obtain current date formatted as DD/MM/YYYY
   const getTodayFormatted = () => {
@@ -57,13 +84,14 @@ export default function App() {
     return () => clearInterval(ticker);
   }, []);
 
-  const nextSlide = () => {
-    setCarouselIndex(prev => (prev === CAROUSEL_IMAGES.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevSlide = () => {
-    setCarouselIndex(prev => (prev === 0 ? CAROUSEL_IMAGES.length - 1 : prev - 1));
-  };
+  // Automatic carousel slide transition (every 1.3 seconds)
+  useEffect(() => {
+    if (isPaid) return;
+    const timer = setTimeout(() => {
+      setCarouselIndex(prev => (prev === CAROUSEL_IMAGES.length - 1 ? 0 : prev + 1));
+    }, 1300);
+    return () => clearTimeout(timer);
+  }, [carouselIndex, isPaid]);
 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
@@ -104,22 +132,22 @@ export default function App() {
 
             {/* Core Display Title / Headline */}
             <h1 className="text-[24px] sm:text-[38px] md:text-[44px] font-black tracking-tight leading-[1.1] sm:leading-[1.12] text-slate-900 text-center font-display max-w-2xl px-1">
-              +2.500 <span className="text-red-600 uppercase">Moldes</span> de<br />
+              +2.500 <span className="text-red-500 uppercase">Moldes</span> de<br />
               Festa Infantil<br />
               <div className="relative inline-block mt-1">
-                <span className="text-blue-600 relative z-10">PRONTOS</span>
-                <span className="absolute left-0 -bottom-1 w-full h-[5px] sm:h-[6px] bg-yellow-400 rounded z-0" />
+                <span className="text-blue-500 relative z-10">PRONTOS</span>
+                <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-[6px] sm:h-[8px] bg-blue-100 -rotate-1 rounded z-0" />
               </div>{' '}
               para baixar<br />
               e imprimir
             </h1>
 
-            {/* Imagem do Produto abaixo da Headline */}
-            <div className="w-full max-w-xl mt-6 animate-fade-in px-2">
+            {/* Product Image below name */}
+            <div className="mt-8 w-full max-w-xl rounded-3xl overflow-hidden shadow-md">
               <img 
                 src="https://i.ibb.co/6JBVnsNr/Chat-GPT-Image-24-de-mai-de-2026-18-01-16.png" 
-                alt="Mais de 2500 moldes de festa infantil" 
-                className="w-full h-auto rounded-3xl object-contain shadow-xl shadow-slate-200/50 hover:scale-[1.01] transition-transform duration-300"
+                alt="Kit de Moldes de Festas" 
+                className="w-full h-auto object-cover select-none"
                 referrerPolicy="no-referrer"
               />
             </div>
@@ -191,38 +219,17 @@ export default function App() {
                 </p>
               </div>
 
-              {/* Interactive Carousel - Just Large Images with Manual Arrows */}
+              {/* Interactive Carousel - Just Large Images without Boxed Card Section style */}
               <div className="w-full flex flex-col gap-4 items-center">
                 
-                {/* Main Large Image Stage with Left & Right arrows */}
-                <div className="w-full relative flex items-center group">
-                  
-                  {/* Left Arrow Button */}
-                  <button
-                    onClick={prevSlide}
-                    className="absolute left-3 sm:left-4 z-10 bg-white/90 hover:bg-white active:bg-slate-100 text-slate-800 p-2 sm:p-2.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all border border-slate-100 cursor-pointer"
-                    aria-label="Imagem anterior"
-                  >
-                    <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
-                  </button>
-
-                  <div className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-slate-950 shadow-md">
-                    <img 
-                      src={CAROUSEL_IMAGES[carouselIndex]}
-                      alt={`Festa infantil decorada com moldes ${carouselIndex + 1}`}
-                      className="w-full h-full object-contain select-none transition-all duration-300"
-                      referrerPolicy="no-referrer"
-                    />
-                  </div>
-
-                  {/* Right Arrow Button */}
-                  <button
-                    onClick={nextSlide}
-                    className="absolute right-3 sm:right-4 z-10 bg-white/90 hover:bg-white active:bg-slate-100 text-slate-800 p-2 sm:p-2.5 rounded-full shadow-lg hover:scale-105 active:scale-95 transition-all border border-slate-100 cursor-pointer"
-                    aria-label="Próxima imagem"
-                  >
-                    <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" />
-                  </button>
+                {/* Main Large Image Stage */}
+                <div className="w-full aspect-[4/3] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-slate-950 shadow-md">
+                  <img 
+                    src={CAROUSEL_IMAGES[carouselIndex]}
+                    alt={`Festa infantil decorada com moldes ${carouselIndex + 1}`}
+                    className="w-full h-full object-contain select-none transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
 
                 {/* Indicator dot triggers */}
@@ -259,65 +266,65 @@ export default function App() {
 
             </section>
 
-            {/* 3. THIRD SECTION: HOW IT WORKS / COMO FUNCIONA */}
+            {/* 3. THIRD SECTION: COMO FUNCIONA & SIMULADOR DE MOLDES */}
             <section className="w-full max-w-4xl mt-14 pt-12 border-t border-slate-200/95 flex flex-col items-center">
               
-              <div className="text-center mb-10 px-4">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 font-display tracking-tight leading-tight">
+              <div className="text-center mb-10">
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-display tracking-tight leading-tight">
                   Como funciona?
                 </h2>
-                <p className="text-sm sm:text-base text-slate-500 font-medium mt-2">
+                <p className="text-sm sm:text-base text-slate-500 font-semibold mt-2">
                   Simples, rápido e sem complicação
                 </p>
               </div>
 
-              {/* Steps grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-4 mb-8">
+              {/* Steps Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                 
                 {/* Passo 1 */}
-                <div className="bg-white rounded-[32px] p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center transition-all duration-300 hover:shadow-md hover:border-slate-200/60">
-                  <div className="w-16 h-16 rounded-[20px] bg-emerald-500/10 flex items-center justify-center mb-4">
-                    <span className="text-2xl">⚡</span>
+                <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-[#e6fbf2] rounded-2xl flex items-center justify-center text-3xl mb-4 select-none">
+                    ⚡
                   </div>
-                  <span className="text-emerald-500 text-xs sm:text-sm font-extrabold uppercase tracking-widest font-display mb-2">
+                  <span className="text-emerald-500 text-xs font-black tracking-widest uppercase mb-1 font-mono">
                     PASSO 1
                   </span>
-                  <h3 className="text-slate-900 text-lg sm:text-xl font-black font-display mb-2">
+                  <h3 className="font-extrabold text-base sm:text-lg text-slate-900 mb-2 font-display">
                     Acesso imediato
                   </h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
                     Após a compra, você recebe acesso imediato a todo o material no e-mail.
                   </p>
                 </div>
 
                 {/* Passo 2 */}
-                <div className="bg-white rounded-[32px] p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center transition-all duration-300 hover:shadow-md hover:border-slate-200/60">
-                  <div className="w-16 h-16 rounded-[20px] bg-emerald-500/10 flex items-center justify-center mb-4">
-                    <span className="text-2xl">👆</span>
+                <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-[#e6fbf2] rounded-2xl flex items-center justify-center text-3xl mb-4 select-none">
+                    👇
                   </div>
-                  <span className="text-emerald-500 text-xs sm:text-sm font-extrabold uppercase tracking-widest font-display mb-2">
+                  <span className="text-emerald-500 text-xs font-black tracking-widest uppercase mb-1 font-mono">
                     PASSO 2
                   </span>
-                  <h3 className="text-slate-900 text-lg sm:text-xl font-black font-display mb-2">
+                  <h3 className="font-extrabold text-base sm:text-lg text-slate-900 mb-2 font-display">
                     Escolha seus temas
                   </h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
                     Navegue por milhares de temas de festa infantil prontos.
                   </p>
                 </div>
 
                 {/* Passo 3 */}
-                <div className="bg-white rounded-[32px] p-8 shadow-sm border border-slate-100 flex flex-col items-center text-center transition-all duration-300 hover:shadow-md hover:border-slate-200/60">
-                  <div className="w-16 h-16 rounded-[20px] bg-emerald-500/10 flex items-center justify-center mb-4">
-                    <span className="text-2xl">🖨️</span>
+                <div className="bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center">
+                  <div className="w-16 h-16 bg-[#e6fbf2] rounded-2xl flex items-center justify-center text-2xl mb-4 select-none">
+                    🖨️
                   </div>
-                  <span className="text-emerald-500 text-xs sm:text-sm font-extrabold uppercase tracking-widest font-display mb-2">
+                  <span className="text-emerald-500 text-xs font-black tracking-widest uppercase mb-1 font-mono">
                     PASSO 3
                   </span>
-                  <h3 className="text-slate-900 text-lg sm:text-xl font-black font-display mb-2">
+                  <h3 className="font-extrabold text-base sm:text-lg text-slate-900 mb-2 font-display">
                     Imprima ou venda
                   </h3>
-                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
                     Imprima em casa ou personalize para vender kits completos.
                   </p>
                 </div>
@@ -326,179 +333,176 @@ export default function App() {
 
             </section>
 
-            {/* 4. FOURTH SECTION: WARRANTY & FAQ */}
+            {/* 4. FOURTH SECTION: OFERTA EXCLUSIVA COMPLETA */}
             <section className="w-full max-w-4xl mt-14 pt-12 border-t border-slate-200/95 flex flex-col items-center">
-              
-              {/* Seção de Oferta (R$5,99 Price and Offer Block) */}
-              <div className="w-full bg-gradient-to-b from-sky-50/50 via-pink-50/30 to-amber-50/40 rounded-[28px] p-5 sm:p-7 shadow-lg border border-sky-100/60 flex flex-col items-center gap-4.5 mb-10 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-sky-300/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-pink-300/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                {/* Badge */}
-                <span className="bg-sky-100/80 text-sky-700 text-[8px] sm:text-[9.5px] font-black uppercase tracking-widest px-3 py-0.5 rounded-full font-display z-10 border border-sky-200/30">
-                  OFERTA EXCLUSIVA DO DIA
+              <div className="text-center mb-8">
+                <span className="bg-emerald-100 text-emerald-800 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
+                  ⚡ OFERTA COMPLETA LIMITADA
                 </span>
-
-                {/* Centered Image, matching size of the offer card with premium subtle frame */}
-                <div className="w-full max-w-lg mx-auto rounded-xl overflow-hidden shadow-xs border border-slate-100 bg-white p-1 relative z-10 hover:shadow-sm transition-shadow duration-300">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 font-display tracking-tight leading-tight mt-4">
+                  Adquira Agora e Garanta Todos os Seus Moldes
+                </h2>
+                <p className="text-sm sm:text-base text-slate-500 font-medium mt-2 max-w-xl mx-auto mb-6">
+                  Leve o pacote completo com mais de 2.500 arquivos prontos e comece a festejar hoje mesmo.
+                </p>
+                {/* Product Image on TOP of Offer Section */}
+                <div className="w-full max-w-xl mx-auto rounded-3xl overflow-hidden shadow-md">
                   <img 
                     src="https://i.ibb.co/6JBVnsNr/Chat-GPT-Image-24-de-mai-de-2026-18-01-16.png" 
-                    alt="Super Kit de Moldes" 
-                    className="w-full h-auto rounded-lg object-contain"
+                    alt="Pacote de Moldes Completos" 
+                    className="w-full h-auto object-cover select-none"
                     referrerPolicy="no-referrer"
                   />
                 </div>
+              </div>
 
-                {/* Text Content */}
-                <div className="text-center max-w-md z-10 mt-0.5">
-                  <h3 className="text-2xl sm:text-3xl font-black font-display text-slate-800 tracking-tight leading-tight">
-                    Super Kit Completo de Moldes
-                  </h3>
-                  <p className="text-slate-500 text-[10px] sm:text-[11px] mt-1 font-medium leading-relaxed font-display">
-                    Acesso imediato e vitalício ao melhor acervo de arquivos prontos de festa infantil.
-                  </p>
+              {/* Oferta Card */}
+              <div className="w-full max-w-2xl bg-white border-2 border-emerald-500 rounded-3xl p-6 sm:p-8 shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] sm:text-xs font-extrabold px-6 py-2 rounded-bl-3xl uppercase tracking-wider">
+                  OFERTA ATIVA ⭐
                 </div>
-
-                {/* List of features matching user requirements */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 w-full max-w-sm my-1 font-display z-10">
-                  {[
-                    "+2.500 moldes de festa",
-                    "Acesso imediato",
-                    "Arquivos para imprimir",
-                    "Garantia de 7 dias",
-                    "Acesso Vitalício"
-                  ].map((benefit, bIdx) => (
-                    <div key={bIdx} className="flex items-center gap-1.5 bg-white/90 border border-slate-100/50 px-3 py-1.5 rounded-lg shadow-2xs hover:border-sky-500/10 transition-colors">
-                      <span className="w-3.5 h-3.5 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-black text-[9px] shrink-0">
-                        ✓
-                      </span>
-                      <span className="text-slate-600 text-[10px] sm:text-[11px] font-bold">{benefit}</span>
+                
+                {/* List of included things */}
+                <div className="space-y-4 mb-8 mt-4 sm:mt-2">
+                  <div className="flex items-start gap-3 text-left">
+                    <span className="text-emerald-500 text-xl shrink-0">✓</span>
+                    <div>
+                      <h4 className="font-extrabold text-slate-800 text-sm sm:text-base">Mega Kit +2.500 Moldes de Festas</h4>
+                      <p className="text-xs sm:text-sm text-slate-500">Mickey, Princesas, Heróis, Dinossauros, Safari e muito mais.</p>
                     </div>
-                  ))}
+                    <span className="ml-auto font-mono text-xs sm:text-sm text-slate-400 line-through shrink-0">R$ 97,00</span>
+                  </div>
+                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3 text-left">
+                    <span className="text-emerald-500 text-xl shrink-0">✓</span>
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm sm:text-base">Acesso Vitalício</h4>
+                      <p className="text-xs sm:text-sm text-slate-500">Os moldes são seus para sempre, sem mensalidades ou taxas ocultas.</p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs sm:text-sm text-emerald-500 font-extrabold shrink-0">INCLUÍDO</span>
+                  </div>
+                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3 text-left">
+                    <span className="text-emerald-500 text-xl shrink-0">✓</span>
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm sm:text-base">Garantia de 7 Dias</h4>
+                      <p className="text-xs sm:text-sm text-slate-500">Garantia incondicional de satisfação ou reembolso integral.</p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs sm:text-sm text-emerald-500 font-extrabold shrink-0">INCLUÍDO</span>
+                  </div>
+                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3 text-left">
+                    <span className="text-emerald-500 text-xl shrink-0">✓</span>
+                    <div>
+                      <h4 className="font-bold text-slate-800 text-sm sm:text-base">Pagamento Seguro</h4>
+                      <p className="text-xs sm:text-sm text-slate-500">Sua compra é autenticada e blindada em ambiente criptografado.</p>
+                    </div>
+                    <span className="ml-auto font-mono text-xs sm:text-sm text-emerald-500 font-extrabold shrink-0">CONFIRMADO</span>
+                  </div>
                 </div>
 
-                {/* Price and CTA side of offer */}
-                <div className="w-full max-w-xs shrink-0 border-t border-slate-200/40 pt-4 flex flex-col items-center text-center z-10">
-                  <span className="text-slate-400 text-[9px] sm:text-[10px] line-through font-semibold font-display">
-                    De R$ 47 por
+                {/* Pricing Block */}
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-150 text-center flex flex-col items-center">
+                  <span className="text-slate-400 text-xs sm:text-sm line-through">
+                    De R$ 97,00 por
                   </span>
-                  <div className="flex items-baseline gap-0.5 mt-0.5 justify-center font-display">
-                    <span className="text-emerald-500 font-extrabold text-sm sm:text-base">R$</span>
-                    <span className="text-emerald-500 font-black text-4xl sm:text-5xl tracking-tight leading-none">5,99</span>
+                  <div className="mt-2 text-slate-500 text-xs sm:text-sm font-medium">
+                    Hoje você leva tudo com acesso vitalício por apenas:
                   </div>
-                  <span className="text-slate-400 text-[8px] sm:text-[9px] font-bold uppercase mt-1 tracking-wider block font-display">
-                    ACESSO VITALÍCIO • PAGAMENTO ÚNICO
+                  <div className="text-4xl sm:text-5xl font-black text-emerald-500 font-display mt-2 tracking-tight">
+                    R$ 5,99
+                  </div>
+                  <span className="text-[10px] sm:text-xs font-bold text-slate-400 mt-2">
+                    *Sem assinaturas. Acesso total, imediato e definitivo.
                   </span>
 
+                  {/* CTA button in Offer Card */}
                   <button
+                    id="offer-purchase-cta"
                     onClick={() => setIsCheckoutOpen(true)}
-                    className="w-full mt-3 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-[11px] sm:text-xs py-2.5 px-4 rounded-lg shadow-sm shadow-emerald-500/15 transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-1.5 tracking-wider cursor-pointer select-none uppercase font-display"
+                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-extrabold text-base sm:text-lg py-4 px-6 rounded-2xl shadow-lg shadow-emerald-500/25 active:shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
                   >
-                    <span>⚡</span>
-                    <span>Quero os moldes agora</span>
+                    <span>🎁</span>
+                    <span>Aproveitar Oferta Especial</span>
                   </button>
                 </div>
               </div>
+            </section>
 
-              {/* 7-Day Warranty block */}
-              <div className="w-full bg-gradient-to-br from-sky-50 to-blue-100/60 text-slate-800 rounded-[28px] p-5 sm:p-8 shadow-md border border-blue-200/50 flex flex-col md:flex-row items-center gap-5 sm:gap-7 mb-14 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-300/10 rounded-full blur-3xl pointer-events-none"></div>
-                
-                {/* Blue Trust Stamp Illustration */}
-                <div className="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 bg-blue-500/10 border border-blue-550/20 rounded-full flex items-center justify-center relative shadow-inner">
-                  <Award className="w-10 h-10 text-blue-600 stroke-[1.5]" />
-                  <span className="absolute -bottom-1 bg-blue-600 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md">
-                    7 DIAS
-                  </span>
+            {/* 4.5. GUARANTEE SECTION: GARANTIA DE 7 DIAS */}
+            <section className="w-full max-w-4xl mt-14 pt-12 border-t border-slate-200/95 flex flex-col items-center">
+              <div className="w-full max-w-2xl bg-[#EBF5FF] border border-[#DEECFD] rounded-3xl p-6 sm:p-8 text-center flex flex-col items-center shadow-md relative overflow-hidden group">
+                <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center text-3xl mb-4 shadow-sm relative z-10 select-none">
+                  🛡️
                 </div>
 
-                {/* Warranty Info Content */}
-                <div className="flex-1 text-center md:text-left">
-                  <span className="text-blue-600 text-[11px] sm:text-xs font-black uppercase tracking-wider font-display block mb-0.5">
-                    Garantia Blindada
-                  </span>
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-black font-display text-slate-900 mb-1.5 tracking-tight">
-                    Sem Riscos: Garantia Incondicional de 7 Dias
-                  </h3>
-                  <p className="text-slate-600 text-[11px] sm:text-xs md:text-sm leading-relaxed font-semibold">
-                    Temos certeza absoluta de que você vai amar os nossos moldes. Mas, se por qualquer motivo você não ficar 100% satisfeita em até 7 dias, basta nos enviar um e-mail para receber todo o seu dinheiro de volta na hora. Sem burocracia ou perguntas. O risco é todo nosso!
-                  </p>
+                <h3 className="text-2xl sm:text-3xl font-black text-blue-900 font-display tracking-tight leading-tight relative z-10">
+                  Garantia Especial de 7 Dias
+                </h3>
+
+                <p className="text-sm sm:text-base text-blue-950 font-medium mt-3 max-w-xl leading-relaxed relative z-10">
+                  Fique 100% tranquila! Você tem <strong className="text-blue-900 font-extrabold">7 dias completos</strong> para testar e usar toda a nossa plataforma e baixar seus moldes favoritos.
+                </p>
+
+                <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-xl leading-relaxed relative z-10">
+                  Se por qualquer motivo você não amar os arquivos ou achar que não é para você, basta nos enviar um único e-mail e devolvermos <strong className="text-emerald-500 font-extrabold">100% do seu dinheiro</strong> de imediato. Sem burocracia ou complicações.
+                </p>
+
+                <div className="mt-5 flex flex-wrap items-center justify-center gap-3 text-[10px] sm:text-xs font-bold text-blue-800 tracking-wider uppercase relative z-10">
+                  <div className="flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full">
+                    <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Satisfação Garantida</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 bg-white/70 px-3 py-1 rounded-full">
+                    <span>Compra 100% Blindada</span>
+                  </div>
                 </div>
               </div>
+            </section>
 
-              {/* FAQ Section */}
-              <div className="w-full max-w-3xl flex flex-col items-center px-4">
-                
-                <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-700 px-3.5 py-1 rounded-full text-xs font-bold mb-3 font-display">
-                    <HelpCircle className="w-3.5 h-3.5" />
-                    <span>DÚVIDAS FREQUENTES</span>
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 font-display tracking-tight leading-tight">
-                    Perguntas Frequentes
-                  </h2>
-                  <p className="text-slate-500 text-xs sm:text-sm font-medium mt-1.5 leading-relaxed">
-                    Ainda tem alguma dúvida? Encontre a resposta abaixo
-                  </p>
-                </div>
+            {/* 5. FIFTH SECTION: PERGUNTAS FREQUENTES (FAQ) */}
+            <section className="w-full max-w-4xl mt-14 pt-12 border-t border-slate-200/95 flex flex-col items-center">
+              <div className="text-center mb-8">
+                <span className="bg-emerald-100 text-emerald-800 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider">
+                  ❓ DÚVIDAS FREQUENTES
+                </span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 font-display tracking-tight leading-tight mt-4">
+                  Perguntas Frequentes
+                </h2>
+                <p className="text-sm sm:text-base text-slate-500 font-medium mt-2 max-w-xl mx-auto">
+                  Ainda tem alguma dúvida? Confira as respostas para as perguntas mais comuns de nossas clientes:
+                </p>
+              </div>
 
-                {/* FAQ List Accordion */}
-                <div className="w-full flex flex-col gap-3">
-                  {[
-                    {
-                      q: "Como vou receber os meus moldes?",
-                      a: "O envio é 100% automático e imediato. Logo após a aprovação do pagamento, você receberá um e-mail com as instruções de acesso e link para baixar todo o material."
-                    },
-                    {
-                      q: "Preciso de uma impressora profissional para usar?",
-                      a: "Não! Todos os moldes foram projetados pensando na facilidade caseira. Você pode imprimi-los em qualquer impressora comum (jato de tinta ou laser) no papel que preferir."
-                    },
-                    {
-                      q: "Os arquivos vêm em quais formatos?",
-                      a: "Eles vêm prontos em formato PDF (de altíssima qualidade prontos para imprimir e cortar na tesoura) and também acompanham formato especial para quem usa máquina de corte (como Silhouette Studio DXF/SVG)."
-                    },
-                    {
-                      q: "Por quanto tempo poderei acessar os moldes?",
-                      a: "O seu acesso é Vitalício! Você poderá baixar e usar os moldes hoje, amanhã ou daqui a anos. Sempre estarão disponíveis no seu painel para quando precisar."
-                    },
-                    {
-                      q: "Posso vender os moldes prontos e montados?",
-                      a: "Com certeza, essa é uma ótima fonte de renda! Você tem permissão comercial completa para fabricar e vender os itens de papelaria montados e decorados para os seus clientes."
-                    }
-                  ].map((item, idx) => (
+              {/* Accordion container */}
+              <div className="w-full max-w-2xl space-y-3">
+                {FAQ_ITEMS.map((item, index) => {
+                  const isOpen = openFaqIndex === index;
+                  return (
                     <div 
-                      key={idx} 
-                      className={`bg-white rounded-2xl border transition-all duration-300 ${
-                        activeFaq === idx 
-                          ? 'border-emerald-500/40 shadow-md shadow-emerald-500/5' 
-                          : 'border-slate-100 shadow-sm hover:border-slate-200/80'
-                      }`}
+                      key={index} 
+                      className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden transition-all duration-300"
                     >
                       <button
-                        onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                        className="w-full text-left px-5 sm:px-6 py-4.5 sm:py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none select-none"
+                        onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                        className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 hover:text-slate-950 transition-colors gap-4"
                       >
-                        <span className="text-slate-900 font-extrabold text-sm sm:text-base leading-snug font-display">
-                          {item.q}
-                        </span>
-                        {activeFaq === idx ? (
-                          <ChevronUp className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                        ) : (
-                          <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />
-                        )}
+                        <span className="text-sm sm:text-base font-extrabold">{item.question}</span>
+                        <ChevronDown 
+                          className={`w-5 h-5 text-slate-500 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-emerald-500' : ''}`} 
+                        />
                       </button>
                       
-                      {activeFaq === idx && (
-                        <div className="px-5 sm:px-6 pb-5 border-t border-slate-50/80 pt-4 text-xs sm:text-sm text-slate-500 leading-relaxed font-normal animate-fadeIn">
-                          {item.a}
+                      <div 
+                        className={`transition-all duration-300 overflow-hidden ${
+                          isOpen ? 'max-h-60 border-t border-slate-100' : 'max-h-0'
+                        }`}
+                      >
+                        <div className="p-5 text-slate-600 text-xs sm:text-sm leading-relaxed bg-[#FAFCFE]">
+                          {item.answer}
                         </div>
-                      )}
+                      </div>
                     </div>
-                  ))}
-                </div>
-
+                  );
+                })}
               </div>
-
             </section>
 
           </div>
