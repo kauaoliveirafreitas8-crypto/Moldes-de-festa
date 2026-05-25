@@ -136,7 +136,7 @@ export default function App() {
 
             {/* Core Display Title / Headline */}
             <h1 className="text-[24px] sm:text-[38px] md:text-[44px] font-black tracking-tight leading-[1.1] sm:leading-[1.12] text-slate-900 text-center font-display max-w-2xl px-1">
-              +2.500 <span className="text-red-500 uppercase">Moldes</span> de<br />
+              +3.500 <span className="text-red-500 uppercase">Moldes</span> de<br />
               Festa Infantil<br />
               <div className="relative inline-block mt-1">
                 <span className="text-blue-500 relative z-10">PRONTOS</span>
@@ -347,7 +347,7 @@ export default function App() {
                   Adquira Agora e Garanta Todos os Seus Moldes
                 </h2>
                 <p className="text-sm sm:text-base text-slate-500 font-medium mt-2 max-w-xl mx-auto mb-6">
-                  Leve o pacote completo com mais de 2.500 arquivos prontos e comece a festejar hoje mesmo.
+                  Leve o pacote completo com mais de 3.500 arquivos prontos e comece a festejar hoje mesmo.
                 </p>
                 {/* Product Image on TOP of Offer Section */}
                 <div className="w-full max-w-xl mx-auto rounded-3xl overflow-hidden shadow-md">
@@ -371,7 +371,7 @@ export default function App() {
                   <div className="flex items-start gap-3 text-left">
                     <span className="text-emerald-500 text-xl shrink-0">✓</span>
                     <div>
-                      <h4 className="font-extrabold text-slate-800 text-sm sm:text-base">Mega Kit +2.500 Moldes de Festas</h4>
+                      <h4 className="font-extrabold text-slate-800 text-sm sm:text-base">Mega Kit +3.500 Moldes de Festas</h4>
                       <p className="text-xs sm:text-sm text-slate-500">Mickey, Princesas, Heróis, Dinossauros, Safari e muito mais.</p>
                     </div>
                     <span className="ml-auto font-mono text-xs sm:text-sm text-slate-400 line-through shrink-0">R$ 97,00</span>
@@ -403,29 +403,43 @@ export default function App() {
                 </div>
 
                 {/* Pricing Block */}
-                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-150 text-center flex flex-col items-center">
-                  <span className="text-slate-400 text-xs sm:text-sm line-through">
-                    De R$ 97,00 por
+                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-500 text-center flex flex-col items-center shadow-2xl shadow-emerald-500/5 overflow-hidden">
+                  {/* Premium Ribbon/Badge */}
+                  <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] sm:text-[11px] font-black uppercase tracking-widest px-3.5 py-1.5 rounded-bl-xl shadow-sm">
+                    Tempo Limitado
+                  </div>
+
+                  <span className="text-rose-500 font-extrabold text-sm sm:text-base line-through tracking-wide">
+                    De R$ 47,00 por
                   </span>
-                  <div className="mt-2 text-slate-500 text-xs sm:text-sm font-medium">
+
+                  <div className="mt-3 text-slate-600 text-xs sm:text-sm font-semibold max-w-xs">
                     Hoje você leva tudo com acesso vitalício por apenas:
                   </div>
-                  <div className="text-4xl sm:text-5xl font-black text-emerald-500 font-display mt-2 tracking-tight">
-                    R$ 5,99
+
+                  <div className="mt-3.5 flex items-baseline gap-1 select-none">
+                    <span className="text-2xl sm:text-3xl font-extrabold text-emerald-600 font-display">R$</span>
+                    <span className="text-5xl sm:text-6xl font-black text-emerald-500 font-display tracking-tight leading-none">5,99</span>
                   </div>
-                  <span className="text-[10px] sm:text-xs font-bold text-slate-400 mt-2">
-                    *Sem assinaturas. Acesso total, imediato e definitivo.
-                  </span>
+
+                  <div className="mt-3.5 flex items-center gap-1.5 text-slate-500">
+                    <span className="text-emerald-500 text-xs">⚡</span>
+                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500">Acesso imediato • Sem mensalidades</span>
+                  </div>
 
                   {/* CTA button in Offer Card */}
                   <button
                     id="offer-purchase-cta"
                     onClick={handleCtaClick}
-                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-extrabold text-base sm:text-lg py-4 px-6 rounded-2xl shadow-lg shadow-emerald-500/25 active:shadow-md transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
+                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-base sm:text-lg py-4.5 px-6 rounded-2xl shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/40 active:shadow-md transition-all hover:scale-[1.015] active:scale-[0.985] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
                   >
                     <span>🎁</span>
                     <span>Aproveitar Oferta Especial</span>
                   </button>
+                  
+                  <span className="text-[10px] sm:text-xs font-medium text-slate-400 mt-4 leading-normal">
+                    *Acesso vitalício e definitivo. Download liberado na mesma hora da compra.
+                  </span>
                 </div>
               </div>
             </section>
