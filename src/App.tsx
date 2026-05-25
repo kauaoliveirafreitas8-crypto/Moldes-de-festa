@@ -180,14 +180,14 @@ export default function App() {
 
             {/* Main Green Action Button CTA */}
             <div className="w-full max-w-lg mt-8 px-2 flex flex-col items-center">
-              <button
+              <a
                 id="main-purchase-cta"
-                onClick={handleCtaClick}
-                className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-extrabold text-base sm:text-lg md:text-xl py-4 sm:py-5 px-6 rounded-2xl shadow-xl shadow-emerald-500/20 active:shadow-md transition-all hover:scale-[1.02] active:scale-[0.99] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
+                href="https://pay.lowify.com.br/checkout.php?product_id=iSeaBR"
+                className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-extrabold text-base sm:text-lg md:text-xl py-4 sm:py-5 px-6 rounded-2xl shadow-xl shadow-emerald-500/20 active:shadow-md transition-all hover:scale-[1.02] active:scale-[0.99] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display text-center no-underline hover:no-underline"
               >
                 <span>🎉</span>
                 <span>Quero meus moldes agora</span>
-              </button>
+              </a>
 
               {/* Immediate Digital Access Warning Text */}
               <p className="mt-4 text-[10px] sm:text-xs font-black text-emerald-500 tracking-wider uppercase text-center font-display leading-tight px-1 select-none">
@@ -253,13 +253,13 @@ export default function App() {
                 </div>
 
                 {/* CTA Button below the carousel */}
-                <button
-                  onClick={handleCtaClick}
-                  className="w-full max-w-xl mt-4 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-sm sm:text-base md:text-lg py-4 px-6 rounded-2xl sm:rounded-3xl shadow-lg shadow-emerald-500/25 active:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 tracking-wider cursor-pointer select-none uppercase font-display"
+                <a
+                  href="https://pay.lowify.com.br/checkout.php?product_id=iSeaBR"
+                  className="w-full max-w-xl mt-4 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-sm sm:text-base md:text-lg py-4 px-6 rounded-2xl sm:rounded-3xl shadow-lg shadow-emerald-500/25 active:shadow-md transition-all hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 tracking-wider cursor-pointer select-none uppercase font-display text-center no-underline hover:no-underline"
                 >
                   <span className="text-lg sm:text-xl">🎉</span>
                   <span>Quero fazer festas assim</span>
-                </button>
+                </a>
 
               </div>
 
@@ -428,14 +428,14 @@ export default function App() {
                   </div>
 
                   {/* CTA button in Offer Card */}
-                  <button
+                  <a
                     id="offer-purchase-cta"
-                    onClick={handleCtaClick}
-                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-base sm:text-lg py-4.5 px-6 rounded-2xl shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/40 active:shadow-md transition-all hover:scale-[1.015] active:scale-[0.985] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display"
+                    href="https://pay.lowify.com.br/checkout.php?product_id=iSeaBR"
+                    className="w-full mt-6 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-white font-black text-base sm:text-lg py-4.5 px-6 rounded-2xl shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/40 active:shadow-md transition-all hover:scale-[1.015] active:scale-[0.985] flex items-center justify-center gap-3 tracking-wide cursor-pointer select-none uppercase font-display text-center no-underline hover:no-underline"
                   >
                     <span>🎁</span>
                     <span>Aproveitar Oferta Especial</span>
-                  </button>
+                  </a>
                   
                   <span className="text-[10px] sm:text-xs font-medium text-slate-400 mt-4 leading-normal">
                     *Acesso vitalício e definitivo. Download liberado na mesma hora da compra.
