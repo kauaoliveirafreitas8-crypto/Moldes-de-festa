@@ -159,13 +159,14 @@ export default function DashboardSandbox({ onReset }: DashboardSandboxProps) {
             </p>
           </div>
         </div>
-        <button
+        <div
           onClick={onReset}
-          className="bg-transparent border border-emerald-500/40 hover:bg-emerald-500/10 text-emerald-300 text-xs font-bold px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 shrink-0"
+          role="button"
+          className="bg-transparent border border-emerald-500/40 hover:bg-emerald-500/10 text-emerald-300 text-xs font-bold px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer select-none"
         >
           <RefreshCw className="w-3.5 h-3.5" />
           Voltar para Oferta Original
-        </button>
+        </div>
       </div>
 
       {/* Title */}
@@ -212,17 +213,18 @@ export default function DashboardSandbox({ onReset }: DashboardSandboxProps) {
         {/* Category filters */}
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
           {categories.map(cat => (
-            <button
+            <div
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium shrink-0 transition-all ${
+              role="button"
+              className={`px-4 py-1.5 rounded-full text-xs font-medium shrink-0 transition-all cursor-pointer select-none ${
                 activeCategory === cat
                   ? 'bg-amber-400 text-slate-950 font-bold'
                   : 'bg-slate-850 text-slate-350 hover:bg-slate-800'
               }`}
             >
               {cat}
-            </button>
+            </div>
           ))}
         </div>
       </div>
@@ -271,14 +273,14 @@ export default function DashboardSandbox({ onReset }: DashboardSandboxProps) {
                 </div>
 
                 <div className="mt-6 pt-3 border-t border-slate-800/60">
-                  <button
-                    disabled={isThisDownloading}
-                    onClick={() => handleDownloadKit(kit.id, kit.name)}
-                    className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                  <div
+                    onClick={() => !isThisDownloading && handleDownloadKit(kit.id, kit.name)}
+                    role="button"
+                    className={`w-full py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer select-none ${
                       hasDownloaded
                         ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
                         : isThisDownloading
-                        ? 'bg-slate-800 text-slate-400 border border-slate-755 cursor-not-allowed'
+                        ? 'bg-slate-800 text-slate-400 border border-slate-755 cursor-not-allowed opacity-60'
                         : 'bg-slate-950 hover:bg-slate-850 text-white border border-slate-750 font-semibold'
                     }`}
                   >
@@ -298,7 +300,7 @@ export default function DashboardSandbox({ onReset }: DashboardSandboxProps) {
                         Baixar Kit .ZIP (Completo)
                       </>
                     )}
-                  </button>
+                  </div>
                 </div>
               </div>
             );

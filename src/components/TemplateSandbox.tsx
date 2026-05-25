@@ -366,10 +366,11 @@ export default function TemplateSandbox({ onOpenCheckout }: TemplateSandboxProps
               {PARTY_THEMES.map((theme) => {
                 const isActive = theme.id === activeThemeId;
                 return (
-                  <button
+                  <div
                     key={theme.id}
                     onClick={() => setActiveThemeId(theme.id)}
-                    className={`flex items-center gap-2 p-2.5 rounded-xl text-left border transition-all text-xs ${
+                    role="button"
+                    className={`flex items-center gap-2 p-2.5 rounded-xl text-left border transition-all text-xs cursor-pointer select-none ${
                       isActive
                         ? 'bg-slate-800 border-emerald-500 ring-2 ring-emerald-500/20 font-bold text-white'
                         : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-slate-800/60 hover:text-white'
@@ -377,7 +378,7 @@ export default function TemplateSandbox({ onOpenCheckout }: TemplateSandboxProps
                   >
                     <span className="text-lg">{theme.emoji}</span>
                     <span className="truncate">{theme.name}</span>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -392,10 +393,11 @@ export default function TemplateSandbox({ onOpenCheckout }: TemplateSandboxProps
               {PRINTABLE_ITEMS.map((item) => {
                 const isActive = item.id === activeItemId;
                 return (
-                  <button
+                  <div
                     key={item.id}
                     onClick={() => setActiveItemId(item.id)}
-                    className={`flex items-center justify-between p-3 rounded-xl border transition-all text-xs ${
+                    role="button"
+                    className={`flex items-center justify-between p-3 rounded-xl border transition-all text-xs cursor-pointer select-none ${
                       isActive
                         ? 'bg-slate-800 border-amber-400 font-bold text-white shadow-md'
                         : 'bg-slate-800/40 border-slate-850 text-slate-300 hover:bg-slate-800/60'
@@ -407,7 +409,7 @@ export default function TemplateSandbox({ onOpenCheckout }: TemplateSandboxProps
                     }`}>
                       {item.category}
                     </span>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -431,20 +433,22 @@ export default function TemplateSandbox({ onOpenCheckout }: TemplateSandboxProps
 
           {/* Action buttons under preview */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
-            <button
+            <div
               onClick={handleDownloadDemo}
-              className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-700/80 border border-slate-750 text-white font-medium py-3 px-4 rounded-xl text-sm transition-all shadow-md group"
+              role="button"
+              className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-700/80 border border-slate-750 text-white font-medium py-3 px-4 rounded-xl text-sm transition-all shadow-md group cursor-pointer select-none"
             >
               <Download className="w-4 h-4 group-hover:translate-y-0.5 transition-transform text-slate-400" />
               Baixar Molde de Teste (.SVG)
-            </button>
-            <button
+            </div>
+            <div
               onClick={onOpenCheckout}
-              className="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 font-bold text-slate-950 py-3 px-4 rounded-xl text-xs sm:text-sm tracking-wide transition-all shadow-lg shadow-emerald-500/20 uppercase"
+              role="button"
+              className="flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 font-bold text-slate-950 py-3 px-4 rounded-xl text-xs sm:text-sm tracking-wide transition-all shadow-lg shadow-emerald-500/20 uppercase cursor-pointer select-none text-center"
             >
               Liberar Pacote Completo (+2.500 moldes)
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </div>
           </div>
 
           {/* Alert Success message when file downloaded */}

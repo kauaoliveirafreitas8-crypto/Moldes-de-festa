@@ -239,16 +239,17 @@ export default function App() {
                 {/* Indicator dot triggers */}
                 <div className="flex items-center justify-center gap-2">
                   {CAROUSEL_IMAGES.map((_, idx) => (
-                    <button
+                    <div
                       key={idx}
                       onClick={() => setCarouselIndex(idx)}
+                      role="button"
                       className={`h-2.5 transition-all rounded-full cursor-pointer ${
                         carouselIndex === idx 
                           ? 'w-6 bg-emerald-500' 
                           : 'w-2.5 bg-slate-200 hover:bg-slate-300'
                       }`}
                       aria-label={`Ir para slide ${idx + 1}`}
-                    />
+                    ></div>
                   ))}
                 </div>
 
@@ -498,15 +499,16 @@ export default function App() {
                       key={index} 
                       className="bg-white border border-slate-200/80 rounded-2xl overflow-hidden transition-all duration-300"
                     >
-                      <button
+                      <div
                         onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                        className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 hover:text-slate-950 transition-colors gap-4"
+                        role="button"
+                        className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 hover:text-slate-950 transition-colors gap-4 cursor-pointer select-none"
                       >
                         <span className="text-sm sm:text-base font-extrabold">{item.question}</span>
                         <ChevronDown 
                           className={`w-5 h-5 text-slate-500 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-emerald-500' : ''}`} 
                         />
-                      </button>
+                      </div>
                       
                       <div 
                         className={`transition-all duration-300 overflow-hidden ${

@@ -75,12 +75,13 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
               </p>
             </div>
           </div>
-          <button 
+          <div 
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800 hover:bg-slate-750 transition-colors"
+            role="button"
+            className="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-800 hover:bg-slate-755 transition-colors cursor-pointer select-none"
           >
             <X className="w-5 h-5" />
-          </button>
+          </div>
         </div>
 
         {/* Content */}
@@ -111,9 +112,10 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
 
           {/* Payment Method Selector */}
           <div className="grid grid-cols-2 gap-3 mb-6">
-            <button
+            <div
               onClick={() => setPaymentMethod('pix')}
-              className={`flex items-center justify-center gap-2.5 p-3.5 rounded-xl border transition-all text-sm font-semibold ${
+              role="button"
+              className={`flex items-center justify-center gap-2.5 p-3.5 rounded-xl border transition-all text-sm font-semibold cursor-pointer select-none ${
                 paymentMethod === 'pix'
                   ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
                   : 'bg-slate-800/40 border-slate-800 text-slate-400 hover:bg-slate-800/60'
@@ -121,10 +123,11 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
             >
               <Smartphone className="w-4 h-4" />
               PIX Copia e Cola
-            </button>
-            <button
+            </div>
+            <div
               onClick={() => setPaymentMethod('card')}
-              className={`flex items-center justify-center gap-2.5 p-3.5 rounded-xl border transition-all text-sm font-semibold ${
+              role="button"
+              className={`flex items-center justify-center gap-2.5 p-3.5 rounded-xl border transition-all text-sm font-semibold cursor-pointer select-none ${
                 paymentMethod === 'card'
                   ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
                   : 'bg-slate-800/40 border-slate-800 text-slate-400 hover:bg-slate-800/60'
@@ -132,7 +135,7 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
             >
               <CreditCard className="w-4 h-4" />
               Cartão de Crédito
-            </button>
+            </div>
           </div>
 
           {/* Tab content */}
@@ -201,9 +204,10 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
                   </div>
 
                   {/* Copy Button */}
-                  <button
+                  <div
                     onClick={handleCopyPix}
-                    className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-750 transition-colors w-full border border-slate-700 p-3 rounded-xl text-xs font-semibold"
+                    role="button"
+                    className="flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-755 transition-colors w-full border border-slate-700 p-3 rounded-xl text-xs font-semibold cursor-pointer select-none"
                   >
                     {copiedPix ? (
                       <>
@@ -216,30 +220,24 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
                         Copiar Código Pix Copiar e Cola
                       </>
                     )}
-                  </button>
+                  </div>
 
                   <div className="w-full mt-2 pt-4 border-t border-slate-850">
-                    <button
+                    <div
                       onClick={handleProcessSimulatedPayment}
-                      className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold p-3.5 rounded-xl text-xs sm:text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 uppercase"
+                      role="button"
+                      className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold p-3.5 rounded-xl text-xs sm:text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 uppercase cursor-pointer select-none"
                     >
                       <ShieldCheck className="w-4 h-4" />
                       Simular Confirmação do Pix
-                    </button>
+                    </div>
                     <p className="text-[10px] text-slate-400 mt-2 text-center">
                       (Clique acima para aprovar sua simulação com sucesso)
                     </p>
                   </div>
                 </div>
               ) : (
-                /* CARD TAB */
-                <form 
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    handleProcessSimulatedPayment();
-                  }}
-                  className="flex flex-col gap-4 text-left"
-                >
+                <div className="flex flex-col gap-4 text-left">
                   <div>
                     <label className="block text-xs text-slate-400 mb-1">
                       Número do Cartão
@@ -301,18 +299,19 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
                   </div>
 
                   <div className="pt-4 border-t border-slate-850 mt-2">
-                    <button
-                      type="submit"
-                      className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold p-3.5 rounded-xl text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 uppercase"
+                    <div
+                      onClick={handleProcessSimulatedPayment}
+                      role="button"
+                      className="w-full bg-emerald-500 hover:bg-emerald-400 active:bg-emerald-600 text-slate-950 font-bold p-3.5 rounded-xl text-sm tracking-wide transition-all shadow-md flex items-center justify-center gap-2 uppercase cursor-pointer select-none"
                     >
                       <ShieldCheck className="w-4 h-4" />
                       Finalizar Pagamento Seguro
-                    </button>
+                    </div>
                     <p className="text-[10px] text-slate-450 mt-2 text-center">
                       🔒 Seus dados estão 100% criptografados. Ambiente de simulação.
                     </p>
                   </div>
-                </form>
+                </div>
               )}
             </div>
           )}
