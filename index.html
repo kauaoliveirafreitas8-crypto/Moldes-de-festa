@@ -6,6 +6,56 @@
     <title>My Google AI Studio App</title>
     <!-- UTMify Tracker & Pixel Scripts -->
     <script>
+      // 1. Initialize Facebook Pixel with standard script safely
+      !(function(f,b,e,v,n,t,s) {
+        if(f.fbq) return;
+        n=f.fbq=function(){
+          n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)
+        };
+        if(!f._fbq) f._fbq=n;
+        n.push=n;
+        n.loaded=!0;
+        n.version='2.0';
+        n.queue=[];
+        t=b.createElement(e);
+        t.async=!0;
+        t.src=v;
+        s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s);
+      })(window, document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+      // 2. Wrap fbq to deduplicate identical tracking events triggered within 1500ms
+      (function() {
+        var originalFbq = window.fbq;
+        var sentEvents = new Map();
+        
+        window.fbq = function() {
+          var args = Array.prototype.slice.call(arguments);
+          var action = args[0];
+          var eventName = args[1];
+          
+          if (action === 'track' || action === 'trackCustom') {
+            var now = Date.now();
+            var lastSent = sentEvents.get(eventName);
+            if (lastSent && (now - lastSent < 1500)) {
+              console.warn("[Meta Pixel Helper Fix] Ignored duplicate event: " + eventName);
+              return;
+            }
+            sentEvents.set(eventName, now);
+          }
+          return originalFbq.apply(this, args);
+        };
+        
+        // Copy original fbq properties to wrapped function to avoid breaking tracking scripts
+        for (var prop in originalFbq) {
+          if (originalFbq.hasOwnProperty(prop)) {
+            window.fbq[prop] = originalFbq[prop];
+          }
+        }
+        window.fbq.push = window.fbq;
+      })();
+
+      // 3. Configure UTMify Pixel ID and load scripts asynchronously
       window.pixelId = "6a1450ff5ce42e7325c8bfff";
       var a = document.createElement("script");
       a.setAttribute("async", "");

@@ -60,17 +60,17 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
         onClick={onClose}
       />
 
-      <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl relative z-10 font-sans text-white">
+      <div className="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative z-10 font-sans text-white">
         
         {/* Header */}
-        <div className="p-6 border-b border-slate-850 flex items-center justify-between">
+        <div className="p-4 sm:p-6 border-b border-slate-850 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <span className="text-xl">🛍️</span>
             <div>
-              <h3 className="font-bold text-lg text-white font-display">
+              <h3 className="font-bold text-base sm:text-lg text-white font-display">
                 Checkout Seguro
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-[10px] sm:text-xs text-slate-400">
                 Acesso imediato aos +2.500 moldes
               </p>
             </div>
@@ -85,56 +85,56 @@ export default function CheckoutModal({ isOpen, onClose, onPaymentSuccess }: Che
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
           
           {/* Order Summary */}
-          <div className="bg-slate-950 rounded-2xl p-4 mb-6 border border-slate-850/60 flex items-center justify-between">
-            <div>
-              <div className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-0.5">
+          <div className="bg-slate-950 rounded-2xl p-3.5 sm:p-4 mb-4 sm:mb-6 border border-slate-850/60 flex items-center justify-between">
+            <div className="flex-1 min-w-0 pr-3">
+              <div className="text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider mb-0.5">
                 Você está adquirindo
               </div>
-              <h4 className="font-bold text-sm text-white">
+              <h4 className="font-bold text-xs sm:text-sm text-white truncate">
                 Mega Kit 2.500+ Moldes de Festas
               </h4>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-[10px] sm:text-xs text-slate-400 mt-0.5">
                 Formatos: PDF, PNG, SVG, Studio V3
               </p>
             </div>
-            <div className="text-right">
-              <span className="text-xs text-slate-400 line-through block">
+            <div className="text-right shrink-0">
+              <span className="text-[10px] sm:text-xs text-slate-400 line-through block">
                 R$ 97,00
               </span>
-              <span className="font-black text-xl text-amber-400 font-display">
+              <span className="font-black text-lg sm:text-xl text-amber-400 font-display">
                 R$ 5,99
               </span>
             </div>
           </div>
 
           {/* Payment Method Selector */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-2 gap-2.5 mb-4 sm:mb-6">
             <div
               onClick={() => setPaymentMethod('pix')}
               role="button"
-              className={`flex items-center justify-center gap-2.5 p-3.5 rounded-xl border transition-all text-sm font-semibold cursor-pointer select-none ${
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 p-2.5 sm:p-3.5 rounded-xl border transition-all text-xs sm:text-sm font-semibold cursor-pointer select-none text-center ${
                 paymentMethod === 'pix'
                   ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
                   : 'bg-slate-800/40 border-slate-800 text-slate-400 hover:bg-slate-800/60'
               }`}
             >
-              <Smartphone className="w-4 h-4" />
-              PIX Copia e Cola
+              <Smartphone className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">PIX</span>
             </div>
             <div
               onClick={() => setPaymentMethod('card')}
               role="button"
-              className={`flex items-center justify-center gap-2.5 p-3.5 rounded-xl border transition-all text-sm font-semibold cursor-pointer select-none ${
+              className={`flex items-center justify-center gap-1.5 sm:gap-2 p-2.5 sm:p-3.5 rounded-xl border transition-all text-xs sm:text-sm font-semibold cursor-pointer select-none text-center ${
                 paymentMethod === 'card'
                   ? 'bg-emerald-500/10 border-emerald-500 text-emerald-300'
                   : 'bg-slate-800/40 border-slate-800 text-slate-400 hover:bg-slate-800/60'
               }`}
             >
-              <CreditCard className="w-4 h-4" />
-              Cartão de Crédito
+              <CreditCard className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">Cartão</span>
             </div>
           </div>
 

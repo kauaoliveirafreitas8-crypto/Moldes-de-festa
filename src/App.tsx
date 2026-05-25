@@ -136,13 +136,13 @@ export default function App() {
 
             {/* Core Display Title / Headline */}
             <h1 className="text-[24px] sm:text-[38px] md:text-[44px] font-black tracking-tight leading-[1.1] sm:leading-[1.12] text-slate-900 text-center font-display max-w-2xl px-1">
-              +3.500 <span className="text-red-500 uppercase">Moldes</span> de<br />
-              Festa Infantil<br />
+              +3.500 <span className="text-red-500 uppercase">Moldes</span> de<br className="hidden sm:inline" />
+              Festa Infantil<br className="hidden sm:inline" />
               <div className="relative inline-block mt-1">
                 <span className="text-blue-500 relative z-10">PRONTOS</span>
                 <span className="absolute left-0 bottom-1 sm:bottom-2 w-full h-[6px] sm:h-[8px] bg-blue-100 -rotate-1 rounded z-0" />
               </div>{' '}
-              para baixar<br />
+              para baixar<br className="hidden sm:inline" />
               e imprimir
             </h1>
 
@@ -196,14 +196,14 @@ export default function App() {
             </div>
 
             {/* Bottom Safe Checklist elements */}
-            <div className="mt-8 mb-6 flex items-center justify-center gap-6 sm:gap-8 text-xs sm:text-sm text-slate-500">
-              <div className="flex items-center gap-1.5 font-medium">
+            <div className="mt-8 mb-6 flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-slate-500 px-4">
+              <div className="flex items-center gap-1.5 font-medium shrink-0">
                 <span className="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 font-semibold">
                   <ShieldCheck className="w-4 h-4 text-emerald-500 stroke-[2.5]" />
                 </span>
                 <span>Pagamento 100% seguro</span>
               </div>
-              <div className="flex items-center gap-1.5 font-medium">
+              <div className="flex items-center gap-1.5 font-medium shrink-0">
                 <span className="w-5 h-5 flex items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 font-bold text-xs">
                   ✓
                 </span>
@@ -237,16 +237,16 @@ export default function App() {
                 </div>
 
                 {/* Indicator dot triggers */}
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-full px-4">
                   {CAROUSEL_IMAGES.map((_, idx) => (
                     <div
                       key={idx}
                       onClick={() => setCarouselIndex(idx)}
                       role="button"
-                      className={`h-2.5 transition-all rounded-full cursor-pointer ${
+                      className={`h-2 sm:h-2.5 transition-all rounded-full cursor-pointer ${
                         carouselIndex === idx 
-                          ? 'w-6 bg-emerald-500' 
-                          : 'w-2.5 bg-slate-200 hover:bg-slate-300'
+                          ? 'w-5 sm:w-6 bg-emerald-500' 
+                          : 'w-2 sm:w-2.5 bg-slate-200 hover:bg-slate-300'
                       }`}
                       aria-label={`Ir para slide ${idx + 1}`}
                     ></div>
@@ -362,40 +362,40 @@ export default function App() {
               </div>
 
               {/* Oferta Card */}
-              <div className="w-full max-w-2xl bg-white border-2 border-emerald-500 rounded-3xl p-6 sm:p-8 shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
+              <div className="w-full max-w-2xl bg-white border-2 border-emerald-500 rounded-3xl p-4 sm:p-8 shadow-xl shadow-emerald-500/5 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] sm:text-xs font-extrabold px-6 py-2 rounded-bl-3xl uppercase tracking-wider">
                   OFERTA ATIVA ⭐
                 </div>
                 
                 {/* List of included things */}
                 <div className="space-y-4 mb-8 mt-4 sm:mt-2">
-                  <div className="flex items-start gap-3 text-left">
+                  <div className="flex items-start gap-2.5 sm:gap-3 text-left">
                     <span className="text-emerald-500 text-xl shrink-0">✓</span>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-extrabold text-slate-800 text-sm sm:text-base">Mega Kit +3.500 Moldes de Festas</h4>
                       <p className="text-xs sm:text-sm text-slate-500">Mickey, Princesas, Heróis, Dinossauros, Safari e muito mais.</p>
                     </div>
                     <span className="ml-auto font-mono text-xs sm:text-sm text-slate-400 line-through shrink-0">R$ 97,00</span>
                   </div>
-                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3 text-left">
+                  <div className="flex items-start gap-2.5 sm:gap-3 border-t border-slate-100 pt-3 text-left">
                     <span className="text-emerald-500 text-xl shrink-0">✓</span>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-bold text-slate-800 text-sm sm:text-base">Acesso Vitalício</h4>
                       <p className="text-xs sm:text-sm text-slate-500">Os moldes são seus para sempre, sem mensalidades ou taxas ocultas.</p>
                     </div>
                     <span className="ml-auto font-mono text-xs sm:text-sm text-emerald-500 font-extrabold shrink-0">INCLUÍDO</span>
                   </div>
-                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3 text-left">
+                  <div className="flex items-start gap-2.5 sm:gap-3 border-t border-slate-100 pt-3 text-left">
                     <span className="text-emerald-500 text-xl shrink-0">✓</span>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-bold text-slate-800 text-sm sm:text-base">Garantia de 7 Dias</h4>
                       <p className="text-xs sm:text-sm text-slate-500">Garantia incondicional de satisfação ou reembolso integral.</p>
                     </div>
                     <span className="ml-auto font-mono text-xs sm:text-sm text-emerald-500 font-extrabold shrink-0">INCLUÍDO</span>
                   </div>
-                  <div className="flex items-start gap-3 border-t border-slate-100 pt-3 text-left">
+                  <div className="flex items-start gap-2.5 sm:gap-3 border-t border-slate-100 pt-3 text-left">
                     <span className="text-emerald-500 text-xl shrink-0">✓</span>
-                    <div>
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-bold text-slate-800 text-sm sm:text-base">Pagamento Seguro</h4>
                       <p className="text-xs sm:text-sm text-slate-500">Sua compra é autenticada e blindada em ambiente criptografado.</p>
                     </div>
@@ -404,7 +404,7 @@ export default function App() {
                 </div>
 
                 {/* Pricing Block */}
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-500 text-center flex flex-col items-center shadow-2xl shadow-emerald-500/5 overflow-hidden">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-8 border-2 border-emerald-500 text-center flex flex-col items-center shadow-2xl shadow-emerald-500/5 overflow-hidden">
                   {/* Premium Ribbon/Badge */}
                   <div className="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] sm:text-[11px] font-black uppercase tracking-widest px-3.5 py-1.5 rounded-bl-xl shadow-sm">
                     Tempo Limitado

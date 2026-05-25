@@ -261,11 +261,11 @@ export default function DashboardSandbox({ onReset }: DashboardSandboxProps) {
                   {/* List of elements inside package */}
                   <div className="mt-4 pt-3 border-t border-slate-800/60">
                     <span className="text-[10px] text-slate-450 uppercase font-mono block mb-1">Moldes Inclusos:</span>
-                    <ul className="grid grid-cols-2 gap-1">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-1">
                       {kit.items.map((it, idx) => (
-                        <li key={idx} className="text-[11px] text-slate-350 flex items-center gap-1.5 truncate">
-                          <span className="w-1 h-1 rounded-full bg-amber-400" />
-                          {it}
+                        <li key={idx} className="text-[11px] text-slate-350 flex items-center gap-1.5">
+                          <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0" />
+                          <span className="leading-tight">{it}</span>
                         </li>
                       ))}
                     </ul>
